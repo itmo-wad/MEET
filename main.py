@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-
+from pymongo import MongoClient
 app = Flask(__name__)
 
 @app.route('/')
@@ -19,6 +19,9 @@ def register():
         password_retry = request.form.get('password-retry')
         
         if password == password_retry:
+            user_id = db.users.count()
+            db.users.insert_one(
+                {"user_id": user_id, "username": username, "email": email, "fname": fname, "lname": lname, "password": password})
             return redirect(url_for('profile', username=username))
         else:
             return redirect(url_for('register'))
@@ -29,4 +32,6 @@ def profile():
     return render_template('profile.html', username=username)
 
 if __name__ == "__main__":
+    client = MongoClient('localhost', 27017)
+    db = client.MEET
     app.run(host='localhost', port=5000, debug=True)
