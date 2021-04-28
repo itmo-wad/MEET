@@ -19,9 +19,8 @@ def register():
         password_retry = request.form.get('password-retry')
         
         if password == password_retry:
-            user_id = db.users.count()
             db.users.insert_one(
-                {"user_id": user_id, "username": username, "email": email, "fname": fname, "lname": lname, "password": password})
+                {"username": username, "email": email, "fname": fname, "lname": lname, "password": password})
             return redirect(url_for('profile', username=username))
         else:
             return redirect(url_for('register'))
@@ -33,5 +32,5 @@ def profile():
 
 if __name__ == "__main__":
     client = MongoClient('localhost', 27017)
-    db = client.MEET
+    db = client.meet_db
     app.run(host='localhost', port=5000, debug=True)
