@@ -25,6 +25,7 @@ def register():
         else:
             return redirect(url_for('register'))
 
+
 @app.route('/profile/', methods = ['GET'])
 def profile():
     username = request.args.get('username')
