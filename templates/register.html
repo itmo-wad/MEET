@@ -1,43 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel='shortcut icon' type='image/x-icon' href="/static/favicon.ico">
-    <link rel="stylesheet" href="/static/css/main.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+{% extends 'authTemplate.html' %}
 
-    <title>Registration</title>
-</head>
-<body>
-    <form action="" method="post">
-        <div class="container">
-            <div class="form">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" name="username" id="username" class="form-control" placeholder="Input your name" required>
-                
-                <label for="email" class="form-label">Email</label>
-                <input type="text" name="email" id="email" class="form-control" placeholder="Input your email" required>
-                
-                <label for="fname" class="form-label">First name</label>
-                <input type="text" name="fname" id="fname" class="form-control" placeholder="Input your first name" required>
+{% block title %}Registration{% endblock%}
 
-                <label for="lname" class="form-label">First name</label>
-                <input type="text" name="lname" id="lname" class="form-control" placeholder="Input your last name" required>
-                
-                <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="Input your password" required minlength="6">
-                
-                <label for="password-retry" class="form-label">Retry password</label>
-                <input type="password" name="password-retry" id="password-retry" class="form-control" placeholder="Input your password" required minlength="6">
-                
-                <div class="submit-button">
-                    <input type="submit" class="btn btn-primary m-3" value="Register">
-                </div>
-            </div>      
+{% block content %}
+<div class="container">
+    <form method="post" class="needs-validation" novalidate>
+        <div class="center-content">
+            <h2>Sign up</h2>
+        </div>
+
+        <label for="username">Username</label>
+        <input type="text" class="form-control" name="username" id="username" required>
+        <div class="invalid-feedback">Please choose username</div>
+
+        <label for="email">Email</label>
+        <input type="email" class="form-control" name="email" id="email" required>
+        <div class="invalid-feedback">Please provide your email</div>
+
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" id="password" required minlength="6">
+        <div class="invalid-feedback">Please enter password</div>
+
+        <label for="password-retry">Retry password</label>
+        <input type="password" class="form-control" name="password-retry" id="password-retry" required minlength="6">
+        <div class="invalid-feedback">Retry your password</div>
+
+        <button class="btn btn-primary" type="submit">Register</button>
+
+        <div class="center-content">
+            <span class='mx-3'>Already registered? <a href='/login/'>Login</a></span>
         </div>
     </form>
-</body>
-</html>
+</div>
+{% endblock %}
