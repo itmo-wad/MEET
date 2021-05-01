@@ -1,4 +1,4 @@
-from src.authentication.utils import hash_password
+import os
 from pymongo import MongoClient
 
 # Database connection
@@ -7,6 +7,7 @@ db = client.meet_db
 
 class User:
     def __init__(self, **kwargs):
+        self._id = os.urandom(12).hex()
         self.username = kwargs.get('username')
         self.email = kwargs.get('email')
         self.password = kwargs.get('password')
@@ -20,6 +21,7 @@ class User:
             return None
         else:
             user = User(
+                _id = query_result['_id'],
                 username = query_result['username'],
                 email = query_result['email'],
                 password = query_result['password'],

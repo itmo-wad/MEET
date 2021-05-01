@@ -18,4 +18,4 @@ All this is possible on MEET!
 
 
 
-![](logo.png) 
+![](/static/img/logo.png) 
