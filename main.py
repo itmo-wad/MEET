@@ -23,6 +23,7 @@ def login():
 def logout():
     return auth.logout()
 
+
 @app.route('/profile/', methods = ['GET'])
 def profile():
     if 'user' in session:
@@ -32,4 +33,6 @@ def profile():
         return redirect(url_for('register'))
 
 if __name__ == "__main__":
+    client = MongoClient('localhost', 27017)
+    db = client.meet_db
     app.run(host='localhost', port=5000, debug=True)
