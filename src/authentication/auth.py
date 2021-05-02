@@ -19,10 +19,10 @@ def register():
                 )
                 user.insert_to_db()
                 session['user'] = user.username        
-                return redirect(url_for('profile'))
+                return redirect(url_for('profile_page'))
             else:
                 return redirect(url_for('register'))
-    return render_template('register.html')
+    return render_template('authentication/register.html')
 
 def login():
     if request.method == 'POST':
@@ -33,13 +33,24 @@ def login():
         if user != None:
             if check_password(password, user.password):
                 session['user'] = user.username
-                return redirect(url_for('profile'))
+                return redirect(url_for('profile_page'))
             else:
                 return redirect(url_for('login'))
         else:
             return redirect(url_for('register'))
-    return render_template('login.html')
+    return render_template('authentication/login.html')
 
 def logout():
     session.pop('user', None)
     return redirect(url_for('login'))
+
+# Decorator that requires authentication
+from functools import wraps
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user' in session:
+            return f(*args, **kwargs)
+        return redirect(url_for('login'))
+    return decorated_function
