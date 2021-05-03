@@ -4,32 +4,49 @@ from src.authentication.utils import check_password, hash_password
 from src.models import User
 
 def cabinet(username):
-    user_session = User.get_from_db(session['user'])
-    find_user=User.get_from_db(username)
-    username=user_session.username
-    if not find_user:
+    current_user = User.get(session['user'])
+    requested_user = User.get(username)
+    username = current_user.username
+    if not requested_user:
         abort(404)
-    user = find_user.username
-    email = find_user.email
-    fname = find_user.fname
-    lname = find_user.lname
-    if user==username:
+    user = requested_user.username
+    email = requested_user.email
+    fname = requested_user.fname
+    lname = requested_user.lname
+    if user == username:
         return render_template('profile/profile.html', username=username, email=email, lname=lname, fname=fname)
     else:
         return render_template('profile/profileGuest.html', username=username, email=email, lname=lname, fname=fname)
 
 
 def changeProfile(username):
-    user_session = User.get_from_db(session['user'])
-    user = user_session.username
-    if user !=username:
+    current_user = User.get(session['user'])
+    user = current_user.username
+    
+    if user != username:
         return render_template(url_for('profile_page', username=username))
-    if request.method == "POST" and user:
-        email = request.form.get('email')
-        password = request.form.get('password')
-        password=hash_password(password)
-        fname = request.form.get('fname')
-        lname = request.form.get('lname')
-        user_session.update_db(email, fname, lname, password)
+    
+    if request.method == "POST" and user:           
+        
+        email = request.form['email']
+        if email and current_user.email != email:
+            current_user.email = email     
+        
+        old_password = request.form['old-password']
+        password = request.form['password']
+        if password and current_user.password != hash_password(password):
+            if check_password(old_password, current_user.password):
+                current_user.password = hash_password(password)      
+        
+        fname = request.form['fname']
+        if fname and current_user.fname != fname:
+            current_user.fname = fname
+        
+        lname = request.form['lname']
+        if lname and current_user.lname != lname:
+            current_user.lname = lname
+
+        current_user.update()
+
         return redirect(url_for('profile_page', username=username))
-    return render_template('profile/changeProfile.html', username=username)
+    return render_template('profile/changeProfile.html', user=current_user)

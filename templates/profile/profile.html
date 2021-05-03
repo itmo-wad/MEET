@@ -1,33 +1,30 @@
-<html>
-<head>
-<title>Profile</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
-</head>
-<body>
-	<div class="main">
-	<div class="shapka"><a href="/logout/">Log out</a></div>
-	<div class="lower">
-	<div class="container">
+{% extends 'base.html' %}
+
+{% block styles %}<link rel="stylesheet" href="/static/css/style.css">{% endblock styles %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+<div class="lower">
+	<div class="profile">
 		<div class="top">
-		<div class="photo">
-		<img src="../../stati/img/avatar.png" class="image"></img>
+			<div class="photo">
+				<img src="/static/img/avatar.png" class="image">
+			</div>
+			<div class="info">
+				<p class="username">{{username}}</p>
+				<p>{{email}}</p>
+				{% if lname -%}
+				<p>{{lname}}</p>
+				{% endif %}
+				{% if fname -%}
+				<p>{{fname}}</p>
+				{% endif %}
+			</div>
 		</div>
-		<div class="info">
-		<p class="username">{{username}}</p>
-		<p>{{email}}</p>
-		{% if lname -%}
-		<p>{{lname}}</p>
-		{% endif %}
-		{% if fname -%}
-		<p>{{fname}}</p>
-		{% endif %}
+		<div class="button">
+			<input type="button" onclick="window.location.href= '{{url_for('change_profile', username=username)}}'" value="change profile" />
 		</div>
-		</div>
-	<div class="button">
-           <input type="button" onclick="window.location.href= '{{url_for('change_profile', username=username)}}'" value="change profile"/>
-         </div>
-         </div>
-    	</div>
-    	</div>
-</body>
-</html>
+	</div>
+</div>
+{% endblock content %}

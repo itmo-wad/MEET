@@ -10,14 +10,14 @@ def register():
         username = request.form['username']
         email = request.form['email']
         
-        if User.get_from_db(username) == None: 
+        if User.get(username) == None: 
             if password == password_retry:
                 user = User(
                     username = username,
                     email = email,
                     password = hash_password(password)
                 )
-                user.insert_to_db()
+                user.insert()
                 session['user'] = user.username        
                 return redirect(url_for('profile_page', username=username))
             else:
@@ -29,7 +29,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        user = User.get_from_db(username)
+        user = User.get(username)
         if user != None:
             if check_password(password, user.password):
                 session['user'] = user.username

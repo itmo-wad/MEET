@@ -22,12 +22,12 @@ a{
 	height: 50px;
 	background-color:#9adb7d;
 	}
-.container{
+
+.profile{
 	padding-top:5%;
 	padding-right:20%;
-	outline: 2px solid #9adb7d; /* Чёрная рамка */
-    	border: 3px solid #9adb7d; /* Белая рамка */
-    	border-radius: 15px;
+    border: 3px solid #9adb7d; /* Белая рамка */
+    border-radius: 15px;
 	height:350px;
 	background-color: white;
 }

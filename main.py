@@ -5,6 +5,7 @@ from flask import Flask, render_template, redirect, url_for, session
 from src.authentication import auth
 from src.authentication.auth import login_required
 from src.user_profile import profile
+from src.users_list import users_list
 
 app = Flask(__name__)
 app.secret_key = b'\xed\xe3\xdc\x18O\xcdS\xb6R\xb0\x8f\xd47\xa2\x87\xc7'
@@ -25,14 +26,19 @@ def login():
 def logout():
     return auth.logout()
 
-@app.route('/profile/<username>', methods = ['GET'])
+@app.route('/profile/<username>/', methods = ['GET'])
 @login_required
 def profile_page(username):
     return profile.cabinet(username)
 
-@app.route('/profile/<username>/changeProfile', methods=['GET', 'POST'])
+@app.route('/profile/<username>/changeProfile/', methods=['GET', 'POST'])
 def change_profile(username):
     return profile.changeProfile(username)
+
+@app.route('/users/')
+def users():
+    return users_list()
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

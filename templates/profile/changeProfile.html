@@ -1,40 +1,36 @@
-<html>
-<head>
-    <title>Profile</title>
-<link rel="stylesheet" href="../../static/css/change.css">
-</head>
-<body>
-<div class="main">
-	<div class="shapka"><a href="/logout/">Log out</a></div>
-	<div class="lower">
-	<div class="container">
-	<div class="photo">
-		<img src="../../static/img/avatar.png" class="image"></img>
-		</div>
-		<div class="changephoto">
-		<form action="" method="post">
-		<p><input type="file" name="photo" multiple accept="image/*,image/jpeg"></p>
+{% extends 'base.html' %}
 
-        <label for="fname"></label>
-        <input type="text" class="form-control" name="fname" id="fname" placeholder="Input your first name">
+{% block title %}Profile{% endblock title %}
 
-        <label for="lname"></label>
-        <input type="text" class="form-control" name="lname" id="lname" placeholder="Input your last name">
-
-        <label for="email"></label>
-        <input type="email" class="form-control" name="email" id="email" placeholder="Input your new email">
-
-        <label for="password"></label>
-        <input type="password" class="form-control" name="password" id="password" placeholder="Input your new password"  minlength="6">
-
-        <div class="buttons">
-        <input type="submit" value="Save">
-        <input type="button" onclick="window.location.href= '{{url_for('profile_page', username=username)}}'" value="cancel"/>
+{% block content %}
+    <div class="container">
+        <div class="photo">
+            <img src="/static/img/avatar.png" class="image">
         </div>
-</form>
-         </div>
-    	</div>
-    	</div>
-</div>
-        </body>
-</html>
+        <div class="changephoto">
+            <form action="" method="post">
+                <p><input type="file" name="photo" multiple accept="image/*,image/jpeg"></p>
+
+                <label for="fname"></label>
+                <input type="text" class="form-control" name="fname" id="fname" placeholder="Input your first name" maxlength="20" value="{{user.fname}}">
+
+                <label for="lname"></label>
+                <input type="text" class="form-control" name="lname" id="lname" placeholder="Input your last name" maxlength="20" value="{{user.lname}}">
+
+                <label for="email"></label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Input your new email" value="{{user.email}}">
+
+                <label for="old-password"></label>
+                <input type="password" class="form-control" name="old-password" id="old-password" placeholder="Input your previous password" minlength="6">
+
+                <label for="password"></label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Input your new password" minlength="6">
+
+                <div class="buttons">
+                    <input class="btn btn-primary" type="submit" value="Save">
+                    <a href="{{ url_for('profile_page', username=user.username) }}" class="btn btn-primary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

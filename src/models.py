@@ -1,4 +1,4 @@
-import os
+from src.authentication.utils import hash_password
 from pymongo import MongoClient
 
 # Database connection
@@ -12,31 +12,38 @@ class User:
         self.password = kwargs.get('password')
         self.fname = kwargs.get('fname')
         self.lname = kwargs.get('lname')
+    
+    @staticmethod
+    def __dict_to_user(data):
+        user = User(
+                username = data['username'],
+                email = data['email'],
+                password = data['password'],
+                fname = data['fname'],
+                lname = data['lname']
+            )
+        return user
 
     @staticmethod
-    def get_from_db(username):
-        query_result = db.users.find_one({'username': username})
-        if query_result == None:
+    def get(username):
+        user_data = db.users.find_one({'username': username})
+        if user_data == None:
             return None
         else:
-            user = User(
-                username = query_result['username'],
-                email = query_result['email'],
-                password = query_result['password'],
-                fname = query_result['fname'],
-                lname = query_result['lname']
-            )
-            return user
+            return User.__dict_to_user(user_data)
     
-    def insert_to_db(self):
+    def insert(self):
         db.users.insert(vars(self))
-    def update_db(self, email, fname, lname, password):
-        if not password:
-            password=self.password
-        if not email:
-            email=self.email
-        if not fname:
-            fname=self.fname
-        if not lname:
-            lname=self.lname
-        db.users.update_one({'username': self.username}, {'$set': {'email':email, 'password':password, 'fname':fname, 'lname':lname}})
+    
+    def update(self):
+        db.users.update_one({'username': self.username}, {'$set': vars(self)})
+
+    @staticmethod
+    def get_all():
+        users_data = db.users.find({})
+        users = []
+
+        for item in users_data:
+            users.append(User.__dict_to_user(item))
+
+        return users

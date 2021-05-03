@@ -23,15 +23,15 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" style="font-size: 1.2rem;">
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="#">Chat</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Users</a>
+                <a class="nav-link" href="{{ url_for('users') }}">Users</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="{{ url_for('profile_page', username=session['user']) }}">Profile</a>
               </li>
             </ul>  
           </div>
