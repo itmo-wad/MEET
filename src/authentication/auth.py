@@ -19,7 +19,7 @@ def register():
                 )
                 user.insert_to_db()
                 session['user'] = user.username        
-                return redirect(url_for('profile_page'))
+                return redirect(url_for('profile_page', username=username))
             else:
                 return redirect(url_for('register'))
     return render_template('authentication/register.html')
@@ -33,7 +33,7 @@ def login():
         if user != None:
             if check_password(password, user.password):
                 session['user'] = user.username
-                return redirect(url_for('profile_page'))
+                return redirect(url_for('profile_page', username=user.username))
             else:
                 return redirect(url_for('login'))
         else:

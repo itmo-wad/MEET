@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>Profile</title>
+<link rel="stylesheet" href="../../static/css/change.css">
+</head>
+<body>
+<div class="main">
+	<div class="shapka"><a href="/logout/">Log out</a></div>
+	<div class="lower">
+	<div class="container">
+	<div class="photo">
+		<img src="../../static/img/avatar.png" class="image"></img>
+		</div>
+		<div class="changephoto">
+		<form action="" method="post">
+		<p><input type="file" name="photo" multiple accept="image/*,image/jpeg"></p>
+
+        <label for="fname"></label>
+        <input type="text" class="form-control" name="fname" id="fname" placeholder="Input your first name">
+
+        <label for="lname"></label>
+        <input type="text" class="form-control" name="lname" id="lname" placeholder="Input your last name">
+
+        <label for="email"></label>
+        <input type="email" class="form-control" name="email" id="email" placeholder="Input your new email">
+
+        <label for="password"></label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Input your new password"  minlength="6">
+
+        <div class="buttons">
+        <input type="submit" value="Save">
+        <input type="button" onclick="window.location.href= '{{url_for('profile_page', username=username)}}'" value="cancel"/>
+        </div>
+</form>
+         </div>
+    	</div>
+    	</div>
+</div>
+        </body>
+</html>
