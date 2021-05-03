@@ -32,10 +32,12 @@ def profile_page(username):
     return profile.cabinet(username)
 
 @app.route('/profile/<username>/changeProfile/', methods=['GET', 'POST'])
+@login_required
 def change_profile(username):
     return profile.changeProfile(username)
 
 @app.route('/users/')
+@login_required
 def users():
     return users_list()
 
