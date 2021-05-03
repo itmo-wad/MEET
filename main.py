@@ -25,10 +25,17 @@ def login():
 def logout():
     return auth.logout()
 
-@app.route('/profile/', methods = ['GET'])
+@app.route('/profile/<username>', methods = ['GET'])
 @login_required
-def profile_page():
-    return profile.cabinet()
+def profile_page(username):
+    return profile.cabinet(username)
+
+@app.route('/profile/<username>/changeProfile', methods=['GET', 'POST'])
+def change_profile(username):
+    return profile.changeProfile(username)
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 if __name__ == "__main__":
     app.run(host='localhost', port=5000, debug=True)

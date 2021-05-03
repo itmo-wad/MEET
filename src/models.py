@@ -30,3 +30,13 @@ class User:
     
     def insert_to_db(self):
         db.users.insert(vars(self))
+    def update_db(self, email, fname, lname, password):
+        if not password:
+            password=self.password
+        if not email:
+            email=self.email
+        if not fname:
+            fname=self.fname
+        if not lname:
+            lname=self.lname
+        db.users.update_one({'username': self.username}, {'$set': {'email':email, 'password':password, 'fname':fname, 'lname':lname}})
