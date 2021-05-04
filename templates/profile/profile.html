@@ -1,30 +1,31 @@
 {% extends 'base.html' %}
 
-{% block styles %}<link rel="stylesheet" href="/static/css/style.css">{% endblock styles %}
 
 {% block title %}Profile{% endblock title %}
 
 {% block content %}
-<div class="lower">
-	<div class="profile">
-		<div class="top">
-			<div class="photo">
-				<img src="/static/img/avatar.png" class="image">
-			</div>
-			<div class="info">
-				<p class="username">{{username}}</p>
-				<p>{{email}}</p>
-				{% if lname -%}
-				<p>{{lname}}</p>
-				{% endif %}
-				{% if fname -%}
-				<p>{{fname}}</p>
-				{% endif %}
-			</div>
-		</div>
-		<div class="button">
-			<input type="button" onclick="window.location.href= '{{url_for('change_profile', username=username)}}'" value="change profile" />
-		</div>
-	</div>
+<div class="card mb-3 w-50 mx-auto mt-5 border border-5 rounded-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4 mt-2 mb-2">
+      <img src="/static/img/avatar.png" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{user.username}}</h5>
+        {% if user.fname != None or user.lname != None  %}
+        <p class="card-text">{{user.lname}} {{user.fname}}</p>
+        {% endif %}
+        <a href="{{url_for('change_profile', username=user.username)}}" class="btn btn-primary">Change Profile</a>
+      </div>
+    </div>
+  </div>
+  <div class="row g-0">
+    <hr>
+    <h5 class="card-title">Invites</h5>
+    {% for invite in invites %}
+    <p><img src="/static/img/avatar.png" alt="..." width="40" height="40">{{invite['user_inviting']}}</p><p> <a href="{{url_for('profile_page', username=invite['user_inviting'])}}" class="btn btn-primary">Profile</a>
+    <a href="{{url_for('add_to_friends', inviting_user=invite['user_inviting'], accept_user=user.username)}}" class="btn btn-primary">Accept invite</a></p>
+    {% endfor %}
+  </div>
 </div>
 {% endblock content %}

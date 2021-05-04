@@ -1,5 +1,6 @@
+from src import friends
 from src.models import User
-from flask import Flask, render_template, redirect, url_for, session
+from flask import Flask, render_template, redirect, url_for, session, request
 
 # Application modules
 from src.authentication import auth
@@ -36,10 +37,24 @@ def profile_page(username):
 def change_profile(username):
     return profile.changeProfile(username)
 
+@app.route('/invite_to_friends/', methods = ['GET'])
+@login_required
+def invite_to_friends():
+    user_invited=request.args.get('user_invited')
+    user_inviting=request.args.get('user_inviting')
+    return friends.invite_friend(user_invited, user_inviting)
+
+@app.route('/add_to_friends/',  methods = ['GET'])
+def add_to_friends():
+    accept_user = request.args.get('accept_user')
+    inviting_user = request.args.get('inviting_user')
+    return  friends.add_to_friends(accept_user, inviting_user)
+
 @app.route('/users/')
 @login_required
 def users():
     return users_list()
+
 
 @app.errorhandler(404)
 def page_not_found(e):

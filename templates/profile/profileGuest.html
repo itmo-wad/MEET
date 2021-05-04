@@ -1,30 +1,48 @@
-<html>
-<head>
-<title>Profile</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
-</head>
-<body>
-	<div class="main">
-	<div class="shapka"><a href="/logout/">Log out</a></div>
-	<div class="lower">
-	<div class="container">
-		<div class="top">
-		<div class="photo">
-		<img src="../../static/img/avatar.png" class="image"></img>
-		</div>
-		<div class="info">
-		<p class="username">{{username}}</p>
-		<p>{{email}}</p>
-		{% if lname -%}
-		<p>{{lname}}</p>
-		{% endif %}
-		{% if fname -%}
-		<p>{{fname}}</p>
-		{% endif %}
-		</div>
-		</div>
-         </div>
-    	</div>
-    	</div>
-</body>
-</html>
+{% extends 'base.html' %}
+
+
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+<div class="card mb-3 w-50 mx-auto mt-5 border border-5 rounded-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4 mt-2 mb-2">
+      <img src="/static/img/avatar.png" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{user.username}}</h5>
+        {% if user.fname != None or user.lname != None  %}
+        <p class="card-text">{{user.lname}} {{user.fname}}</p>
+        {% endif %}
+        {%if (user_guest.username not in user.friends) and (not isInvited) and (not isInvitedByOther) %}
+        <a href=" {{url_for('invite_to_friends', user_invited=user.username, user_inviting=user_guest.username)}} " class="btn btn-primary">Add to friends</a>
+        {% else %}
+        You can not do this
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="row g-0">
+    <hr>
+    <h5 class="card-title">Friends</h5>
+   <div class="row row-cols-1 row-cols-md-3 g-4 mt-0 d-flex flex-wrap">
+     {% if user.friends%}
+    {% for friend in user.friends %}
+  <div class="col">
+    <div class="card align-items-center">
+        <img src="/static/img/avatar.png"  class="card-img-top" style="width: 50px; height: 50px;">
+      <div class="card-body">
+        <p class="card-text mt-0">{{friend}}</p>
+        <a href="{{ url_for('profile_page', username=friend) }}"
+                    class="btn btn-primary mt-0 m-auto">Profile</a>
+      </div>
+    </div>
+
+  </div>
+           {% endfor %}
+      {% endif %}
+</div>
+  </div>
+</div>
+{% endblock content %}

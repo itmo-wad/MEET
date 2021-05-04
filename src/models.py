@@ -5,6 +5,29 @@ from pymongo import MongoClient
 client = MongoClient('localhost', 27017)
 db = client.meet_db
 
+def add_to_friendshipdb(user_invited, user_inviting):
+    user=db.friendship.find_one({"user_inviting":user_inviting, "user_invited":user_invited})
+    if user==None:
+        db.friendship.insert({"user_inviting":user_inviting, "user_invited":user_invited, "isAccepted":False})
+def find_from_friendship(username):
+    invitionList=[]
+    data=db.friendship.find({"user_invited":username})
+    for invite in data:
+       invitionList.append(invite)
+    return invitionList
+def delete_from_friendship(username_invited, username_inviting):
+    db.friendship.remove({"user_inviting":username_inviting, "user_invited":username_invited})
+
+def isInvited_in_db(user_invited, user_inviting):
+    user = db.friendship.find_one({"user_inviting":user_inviting , "user_invited": user_invited})
+    if user==None:
+        return False
+    else:
+        return True
+
+
+
+
 class User:
     def __init__(self, **kwargs):
         self.username = kwargs.get('username')
@@ -12,6 +35,7 @@ class User:
         self.password = kwargs.get('password')
         self.fname = kwargs.get('fname')
         self.lname = kwargs.get('lname')
+        self.friends = kwargs.get('friends')
     
     @staticmethod
     def __dict_to_user(data):
@@ -20,8 +44,11 @@ class User:
                 email = data['email'],
                 password = data['password'],
                 fname = data['fname'],
-                lname = data['lname']
+                lname = data['lname'],
+                friends = data['friends']
             )
+        if not user.friends:
+            user.friends=[]
         return user
 
     @staticmethod
