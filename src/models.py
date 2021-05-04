@@ -1,4 +1,3 @@
-from src.authentication.utils import hash_password
 from pymongo import MongoClient
 
 # Database connection
@@ -38,12 +37,21 @@ class User:
     def update(self):
         db.users.update_one({'username': self.username}, {'$set': vars(self)})
 
-    @staticmethod
-    def get_all():
-        users_data = db.users.find({})
+    def get_all(self):
+        users_data = db.users.find({'username': {'$ne': self.username}})
         users = []
 
         for item in users_data:
             users.append(User.__dict_to_user(item))
 
         return users
+
+class Message:
+    def __init__(self, **kwargs):
+        self.sender = kwargs.get('sender')
+        self.recipient = kwargs.get('recipient')
+        self.text = kwargs.get('text')
+        self.creation_time = kwargs.get('creation_time')
+
+    def send(self):
+        db.messages.insert(vars(self))
