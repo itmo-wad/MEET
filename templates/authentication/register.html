@@ -4,32 +4,42 @@
 
 {% block content %}
 <div class="container">
-    <form method="post" class="needs-validation" novalidate>
-        <div class="center-content">
-            <h2>Sign up</h2>
+    <div class="form-content d-flex">
+        <div class="welcome-panel">
+            <img src="/static/img/logo.png" width="100" height="100">
+            <h4>Welcome to MEET!</h4>
+            <p>MEET is a tool for communicating with your friends</p>
+            <ul>
+                <li>Quickly register</li>
+                <li>Edit your profile</li>
+                <li>Create your own list of friends</li>
+            </ul>
+            <i>Message Exchange is Easier Today!</i>
         </div>
-
-        <label for="username">Username</label>
-        <input type="text" class="form-control" name="username" id="username" required>
-        <div class="invalid-feedback">Please choose username</div>
-
-        <label for="email">Email</label>
-        <input type="email" class="form-control" name="email" id="email" required>
-        <div class="invalid-feedback">Please provide your email</div>
-
-        <label for="password">Password</label>
-        <input type="password" class="form-control" name="password" id="password" required minlength="6">
-        <div class="invalid-feedback">Please enter password</div>
-
-        <label for="password-retry">Retry password</label>
-        <input type="password" class="form-control" name="password-retry" id="password-retry" required minlength="6">
-        <div class="invalid-feedback">Retry your password</div>
-
-        <button class="btn btn-primary" type="submit">Register</button>
-
-        <div class="center-content">
-            <span class='mx-3'>Already registered? <a href='/login/'>Login</a></span>
-        </div>
-    </form>
+        <form method="post" class="needs-validation" novalidate>
+            <h3>
+                <a href="/register/" class="active">Sign Up </a>/<a href="/login/"> Login</a>
+            </h3>  
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="username" id="username" required>
+            <div class="invalid-feedback">Please choose username</div>
+    
+            <label for="email">Email</label>
+            <input type="email" class="form-control" name="email" id="email" required>
+            <div class="invalid-feedback">Please provide your email</div>
+    
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" id="password" required minlength="6">
+            <div class="invalid-feedback">Please enter password</div>
+    
+            <label for="password-retry">Retry password</label>
+            <input type="password" class="form-control" name="password-retry" id="password-retry" required minlength="6">
+            <div class="invalid-feedback">Retry your password</div>
+    
+            <button class="btn btn-primary" type="submit">Register</button>
+        </form>
+    </div>
+    
+    
 </div>
 {% endblock %}
