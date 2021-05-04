@@ -3,17 +3,6 @@
 {% block content %}
 <div class="container">
     <h1>List of users</h1>
-
-    <!-- <ul class="list-group">
-        {% for user in users %}
-        <a href="{{ url_for('profile_page', username=user.username) }}" class="text-decoration-none">
-            <li class="list-group-item">
-                <img src="/static/img/avatar.png" class="image" width="50px" height="50px">
-                <span style="font-size: 1.2rem; margin-left: 10px;">{{user.username}}</span>           
-            </li>
-        </a>
-        {% endfor %}
-    </ul> -->
     <div class="users-cards d-flex flex-wrap">
         {% for user in users %}
         <div class="card" style="width: 18rem; margin: .5rem">
@@ -27,8 +16,6 @@
                     </div>
                     <img src="/static/img/avatar.png" class="" width="60px" height="60px">
                 </div>
-                <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p> -->
                 <a href="{{ url_for('profile_page', username=user.username) }}"
                     class="btn btn-primary w-100 mt-4">Profile</a>
             </div>
