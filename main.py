@@ -36,6 +36,19 @@ def profile_page(username):
 def change_profile(username):
     return profile.changeProfile(username)
 
+@app.route('/invite_to_friends/', methods = ['GET'])
+@login_required
+def invite_to_friends():
+    user_invited=request.args.get('user_invited')
+    user_inviting=request.args.get('user_inviting')
+    return friends.invite_friend(user_invited, user_inviting)
+
+@app.route('/add_to_friends/',  methods = ['GET'])
+def add_to_friends():
+    accept_user = request.args.get('accept_user')
+    inviting_user = request.args.get('inviting_user')
+    return  friends.add_to_friends(accept_user, inviting_user)
+
 @app.route('/users/')
 @login_required
 def users():

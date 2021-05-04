@@ -1,4 +1,6 @@
 from flask import request, render_template, redirect, session, url_for, abort
+
+from src import friends
 from src.authentication.utils import check_password, hash_password
 
 from src.models import User
@@ -14,9 +16,12 @@ def cabinet(username):
     fname = requested_user.fname
     lname = requested_user.lname
     if user == username:
-        return render_template('profile/profile.html', username=username, email=email, lname=lname, fname=fname)
+        invites=friends.check_invites(user)
+        return render_template('profile/profile.html', user=current_user, invites=invites)
     else:
-        return render_template('profile/profileGuest.html', username=username, email=email, lname=lname, fname=fname)
+        isInvited=friends.isInvited(requested_user.username, current_user.username)
+        isInvitedByOther = friends.isInvited(current_user.username, requested_user.username)
+        return render_template('profile/profileGuest.html', user=requested_user, user_guest=current_user, isInvited=isInvited, isInvitedByOther=isInvitedByOther)
 
 
 def changeProfile(username):
@@ -26,7 +31,7 @@ def changeProfile(username):
     if user != username:
         return render_template(url_for('profile_page', username=username))
     
-    if request.method == "POST" and user:           
+    if request.method == "POST" and user:
         
         email = request.form['email']
         if email and current_user.email != email:
@@ -48,5 +53,5 @@ def changeProfile(username):
 
         current_user.update()
 
-        return redirect(url_for('profile_page', username=username))
+        return redirect(url_for('profile_page', user=current_user))
     return render_template('profile/changeProfile.html', user=current_user)
