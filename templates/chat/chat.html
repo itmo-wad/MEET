@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    <link rel="stylesheet" href="/static/css/chat.css">
+{% endblock styles %}
+
+{% block title %}Chat{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <h1>Chat room</h1>
+        <div class="chat-container row justify-content-center">
+            <div class="friends-sidebar col-3 p-0 overflow-auto border">
+                <ul class="list-group">
+                    {% for user in users %}
+                    <li class="list-group-item">
+                        <img src="/static/img/avatar.png" width="30px" height="30px">
+                        <span class="mx-3">{{ user.username }}</span>
+                    </li>
+                    {% endfor %}
+                  </ul>
+            </div>
+            <div class="chat-controls col-6 border d-flex flex-column">
+                <div class="chat-panel overflow-auto flex-grow-1">
+                    <div class="message outgoing-message">
+                        <p class="outgoing">
+                            <span>Hello, welcome to MEET</span> 
+                            <br>
+                            <span class="time">17:32 04.05.2021</span>
+                        </p>                            
+                    </div>
+                    <div class="message">
+                        <p class="incoming">
+                            <span>Nice to be here!</span> 
+                            <br>
+                            <span class="time">17:32 04.05.2021</span>
+                        </p>                            
+                    </div>
+                </div>
+                <form action="" method="post" class="d-flex my-3">
+                    <input type="text" name="message" id="message" class="form-control mx-2" placeholder="Input your message">
+                    <button type="submit" class="btn btn-primary mx-2 flex-shrink-0">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,11 +1,11 @@
-from src.models import User
-from flask import Flask, render_template, redirect, url_for, session
+from flask import Flask, render_template, redirect
 
 # Application modules
 from src.authentication import auth
 from src.authentication.auth import login_required
 from src.user_profile import profile
 from src.users_list import users_list
+from src.chat import chat
 
 app = Flask(__name__)
 app.secret_key = b'\xed\xe3\xdc\x18O\xcdS\xb6R\xb0\x8f\xd47\xa2\x87\xc7'
@@ -40,6 +40,11 @@ def change_profile(username):
 @login_required
 def users():
     return users_list()
+
+@app.route('/chat/')
+@login_required
+def chat_page():
+    return chat()
 
 @app.errorhandler(404)
 def page_not_found(e):

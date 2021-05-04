@@ -1,0 +1,49 @@
+.chat-container {
+    height: 30rem;
+}
+
+.friends-sidebar {
+    height: 100%;
+}
+
+.chat-controls {
+    height: 100%;
+    padding: 0;
+}
+
+.chat-panel {
+    background-color: #eee;
+}
+
+/* Message styles */
+
+.message {
+    margin: 10px 10px;
+}
+
+.outgoing-message {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.message > p {
+    display: inline-block;
+    padding: 10px;
+    margin: 0;
+    border-radius: 10px;
+    max-width: 75%;
+}
+
+.message > p > .time {
+    font-size: 12px;
+}
+
+.incoming {
+    background-color: #cce5ff;
+    border: 1px solid #b8daff;
+}
+
+.outgoing {
+    background-color: #d6d8d9;
+    border: 1px solid #c6c8ca;
+}

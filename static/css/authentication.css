@@ -46,10 +46,12 @@ label {
 a {
     text-decoration: none;
     color: #212529;
+    transition-duration: .3s;
 }
 
 a:hover {
-    color: #212529;
+    color: #FFCC99;
+    transition-duration: .3s;
 }
 
 .active {
