@@ -1,5 +1,5 @@
 .chat-container {
-    height: 30rem;
+    height: 85vh;
 }
 
 .friends-sidebar {
@@ -13,6 +13,24 @@
 
 .chat-panel {
     background-color: #eee;
+}
+
+.list-group-item {
+    cursor: pointer;
+    transition-duration: .3s;
+}
+
+.list-group-item:hover {
+    background-color: #fc9;
+    transition-duration: .3s;
+}
+
+.selected {
+    background-color: #fc9;
+}
+
+img {
+    border-radius: 50%;
 }
 
 /* Message styles */

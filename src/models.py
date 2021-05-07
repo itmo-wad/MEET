@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+import pymongo
 
 # Database connection
 client = MongoClient('localhost', 27017)
@@ -8,12 +9,14 @@ def add_to_friendshipdb(user_invited, user_inviting):
     user=db.friendship.find_one({"user_inviting":user_inviting, "user_invited":user_invited})
     if user==None:
         db.friendship.insert({"user_inviting":user_inviting, "user_invited":user_invited, "isAccepted":False})
+
 def find_from_friendship(username):
     invitionList=[]
     data=db.friendship.find({"user_invited":username})
     for invite in data:
        invitionList.append(invite)
     return invitionList
+
 def delete_from_friendship(username_invited, username_inviting):
     db.friendship.remove({"user_inviting":username_inviting, "user_invited":username_invited})
 
@@ -72,6 +75,9 @@ class User:
             users.append(User.__dict_to_user(item))
 
         return users
+    
+    def get_messages(self):
+        return Message.get_for_user(self)
 
 class Message:
     def __init__(self, **kwargs):
@@ -80,5 +86,24 @@ class Message:
         self.text = kwargs.get('text')
         self.creation_time = kwargs.get('creation_time')
 
-    def send(self):
+    def insert(self):
         db.messages.insert(vars(self))
+    
+    @staticmethod
+    def __dict_to_message(data):
+        message = Message(
+            sender = data['sender'],
+            recipient = data['recipient'],
+            text = data['text'],
+            creation_time = data['creation_time']
+        )
+        return message
+    
+    @staticmethod
+    def get_for_user(user):
+        messages_data = db.messages.find({'$or':[{'sender': user.username}, {'recipient': user.username}]}).sort('creation_time', pymongo.ASCENDING)
+        messages = []
+
+        for item in messages_data:
+            messages.append(Message.__dict_to_message(item))  
+        return messages

@@ -53,5 +53,5 @@ def changeProfile(username):
 
         current_user.update()
 
-        return redirect(url_for('profile_page', user=current_user))
+        return redirect(url_for('profile_page', username=current_user.username))
     return render_template('profile/changeProfile.html', user=current_user)

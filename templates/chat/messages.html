@@ -1,0 +1,19 @@
+{% for message in messages %}
+	{% if message.sender == user.username %}
+        <div class="message outgoing-message">
+            <p class="outgoing">
+                <span>{{ message.text }}</span> 
+                <br>
+                <span class="time">{{ message.creation_time.strftime('%H:%M %d.%m.%Y') }}</span>
+            </p>                            
+		</div>
+	{% else %}
+		<div class="message">
+            <p class="incoming">
+                <span>{{ message.text }}</span> 
+                <br>
+                <span class="time">{{ message.creation_time.strftime('%H:%M %d.%m.%Y') }}</span>
+            </p>                            
+		</div>
+    {% endif %}
+{% endfor %}
