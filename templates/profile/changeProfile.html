@@ -3,76 +3,58 @@
 {% block title %}Profile{% endblock title %}
 
 {% block content %}
-<div class="card mb-3 w-50 mx-auto mt-2 border border-5 rounded-3" style="max-width: 540px;">
-  <div class="row g-0">
-    <div class="col-md-4 mt-2 mb-2">
-      <img src="/static/img/avatar.png" alt="...">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">{{user.username}}</h5>
-        {% if user.fname != None or user.lname != None  %}
-        <p class="card-text">{{user.lname}} {{user.fname}}</p>
-        {% endif %}
-      </div>
-    </div>
-  </div>
+<div class="card mb-3 w-50 mx-auto mt-2 border border-5 rounded-3 p-3" style="max-width: 540px;">
     <div class="row g-0">
-      <form action="" method="post">
-                <p><input type="file" name="photo" multiple accept="image/*,image/jpeg"></p>
-                <hr>
-                <h5 class="card-title">Information changing</h5>
-                <label for="fname"></label>
-                <input type="text" class="form-control form-control-sm" name="fname" id="fname" placeholder="Input your first name" maxlength="20" value="{% if user.fname %}{{user.fname}}{%endif%}">
-
-                <label for="lname"></label>
-                <input type="text" class="form-control form-control-sm" name="lname" id="lname" placeholder="Input your last name" maxlength="20" value="{% if user.lname %}{{user.lname}}{%endif%}">
-
-                <label for="email"></label>
-                <input type="email" class="form-control form-control-sm" name="email" id="email" placeholder="Input your new email" value="{{user.email}}" required>
-
-                <label for="old-password"></label>
-                <input type="password" class="form-control form-control-sm" name="old-password" id="old-password" placeholder="Input your password" minlength="6" required>
-
-                <label for="password"></label>
-                <input type="password" class="form-control form-control-sm" name="password" id="password" placeholder="Input your new password" minlength="6">
-
-                <div class="mt-3 m-auto w-50 align-items-center">
-                    <input class="btn btn-primary" type="submit" value="Save">
-                    <a href="{{ url_for('profile_page', username=user.username) }}" class="btn btn-primary">Cancel</a>
-                </div>
+        <div class="col-md-4 mt-2 mb-2">
+            <img src="{{url_for('userava', username=user.username)}}" alt="..." height="100px" width="100px">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{user.username}}</h5>
+                {% if user.fname != None or user.lname != None %}
+                <p class="card-text">{{user.lname}} {{user.fname}}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row g-0">
+        <div class="mb-3">
+            <label for="formFileSm" class="form-label">Change your photo</label>
+            <form action="{{url_for('upload', username=user.username)}}" method="POST" enctype="multipart/form-data">
+                <input class="form-control form-control-sm" id="formFileSm" type="file" name="file" multiple
+                       accept="image/*,image/jpeg">
+                <input class="btn btn-outline-secondary btn-sm mt-1" type="submit" value="Upload">
             </form>
-  </div>
+        </div>
+        <h5 class="card-title">Information changing</h5>
+        <form action="{{url_for('change_profile', username=user.username)}}" method="POST">
+            <label for="fname"></label>
+            <input type="text" class="form-control form-control-sm" name="fname" id="fname"
+                   placeholder="Input your first name" maxlength="20"
+                   value="{% if user.fname %}{{user.fname}}{%endif%}">
+
+            <label for="lname"></label>
+            <input type="text" class="form-control form-control-sm" name="lname" id="lname"
+                   placeholder="Input your last name" maxlength="20" value="{% if user.lname %}{{user.lname}}{%endif%}">
+
+            <label for="email"></label>
+            <input type="email" class="form-control form-control-sm" name="email" id="email"
+                   placeholder="Input your new email" value="{{user.email}}" required>
+
+            <label for="old-password"></label>
+            <input type="password" class="form-control form-control-sm" name="old-password" id="old-password"
+                   placeholder="Input your password" minlength="6" required>
+
+            <label for="password"></label>
+            <input type="password" class="form-control form-control-sm" name="password" id="password"
+                   placeholder="Input your new password" minlength="6">
+
+            <div class="mt-3 m-auto w-50 align-items-center">
+                <input class="btn btn-primary" type="submit" value="Save">
+                <a href="{{ url_for('profile_page', username=user.username) }}" class="btn btn-primary">Cancel</a>
+            </div>
+        </form>
+    </div>
 </div>
-<!--    <div class="container">-->
-<!--        <div class="photo">-->
-<!--            <img src="/static/img/avatar.png" class="image">-->
-<!--        </div>-->
-<!--        <div class="changephoto">-->
-<!--            <form action="" method="post">-->
-<!--                <p><input type="file" name="photo" multiple accept="image/*,image/jpeg"></p>-->
-
-<!--                <label for="fname"></label>-->
-<!--                <input type="text" class="form-control" name="fname" id="fname" placeholder="Input your first name" maxlength="20" value="{{user.fname}}">-->
-
-<!--                <label for="lname"></label>-->
-<!--                <input type="text" class="form-control" name="lname" id="lname" placeholder="Input your last name" maxlength="20" value="{{user.lname}}">-->
-
-<!--                <label for="email"></label>-->
-<!--                <input type="email" class="form-control" name="email" id="email" placeholder="Input your new email" value="{{user.email}}">-->
-
-<!--                <label for="old-password"></label>-->
-<!--                <input type="password" class="form-control" name="old-password" id="old-password" placeholder="Input your previous password" minlength="6">-->
-
-<!--                <label for="password"></label>-->
-<!--                <input type="password" class="form-control" name="password" id="password" placeholder="Input your new password" minlength="6">-->
-
-<!--                <div class="buttons">-->
-<!--                    <input class="btn btn-primary" type="submit" value="Save">-->
-<!--                    <a href="{{ url_for('profile_page', username=user.username) }}" class="btn btn-primary">Cancel</a>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
 
 {% endblock content %}

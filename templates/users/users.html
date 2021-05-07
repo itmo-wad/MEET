@@ -16,7 +16,7 @@
                             <h6 class="card-subtitle mb-2 text-muted">{{ user.fname }} {{ user.lname }}</h6>
                         {% endif %}
                     </div>
-                    <img src="/static/img/avatar.png" class="" width="60px" height="60px">
+                    <img src="{{url_for('userava', username=user.username)}}" class="" width="60px" height="60px">
                 </div>
                 <a href="{{ url_for('profile_page', username=user.username) }}"
                     class="btn btn-primary w-100 mt-4">Profile</a>
