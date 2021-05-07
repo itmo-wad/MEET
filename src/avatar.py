@@ -8,7 +8,12 @@ from flask import url_for
 def getAvatar(username, app):
     default_ava = 'static/img/avatar.png'
     photo = username + '.png'
-    photo_path = './static/img/userava/' + photo
+    avatar_directory = './static/img/userava/'
+
+    if not os.path.exists(avatar_directory):
+        os.mkdir(avatar_directory)
+    photo_path = avatar_directory + photo
+    
     if not os.path.isfile(photo_path):
         with app.open_resource(app.root_path + url_for('static', filename='img/avatar.png'), "rb") as f:
             img = f.read()

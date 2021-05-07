@@ -11,10 +11,10 @@
     <div class="chat-container row justify-content-center">
         <div class="friends-sidebar col-3 p-0 overflow-auto border">
             <ul class="list-group">
-                {% for user in users %}
+                {% for friend in friends %}
                 <li class="list-group-item">
-                    <img src="/static/img/avatar.png" width="30px" height="30px">
-                    <span class="username mx-3">{{ user.username }}</span>
+                    <img src="{{url_for('userava', username=friend)}}" width="30px" height="30px">
+                    <span class="username mx-3">{{ friend }}</span>
                 </li>
                 {% endfor %}
             </ul>

@@ -6,8 +6,8 @@ from src.models import Message, User
 
 def chat():
     current_user = User.get(session['user'])
-    users = current_user.get_all()
-    return render_template('/chat/chat.html', users=users)
+    friends = current_user.friends
+    return render_template('/chat/chat.html', friends=friends)
 
 def get_messages_from(username):
     current_user = User.get(session['user'])

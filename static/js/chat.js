@@ -1,4 +1,5 @@
 var recipient;
+var isChecked = false
 
 function loadMessages() {
     $.ajax({
@@ -8,21 +9,28 @@ function loadMessages() {
             $(".chat-panel").html(response)
         },
         complete: function() {
-            $(".chat-panel").scrollTop($(".chat-panel")[0].scrollHeight);
+            if (isChecked) {
+                $(".chat-panel").scrollTop($(".chat-panel")[0].scrollHeight);
+                isChecked = false
+            }
         }
     });
 }
 
 $(document).ready(function () {
-    // var timer
+    var timer
     $(".list-group-item").on("click", function(){
-        // clearTimeout(timer)
+        isChecked = true
+        
+        clearTimeout(timer)
         $(".list-group-item").removeClass('selected')
         $(this).addClass('selected')
 
         recipient = $(this).find("span").text()
         loadMessages()
-        // timer = setInterval(loadMessages, 3000)
+        timer = setInterval(loadMessages, 3000)
+
+        $(".chat-panel").scrollTop($(".chat-panel")[0].scrollHeight);
     });
 
     $("form").submit(function(event){

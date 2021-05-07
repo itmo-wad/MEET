@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, session, request, make_response, flash
+from flask import Flask, render_template, redirect, url_for, request, make_response, flash
 
 # Application modules
 from src.authentication import auth
@@ -7,7 +7,6 @@ from src.user_profile import profile
 from src.users_list import users_list
 from src import friends
 from src.avatar import getAvatar, updateAva, isPhoto
-from src.models import User
 import src.chat as chat
 
 app = Flask(__name__)
@@ -63,6 +62,25 @@ def add_to_friends():
     inviting_user = request.args.get('inviting_user')
     return friends.add_to_friends(accept_user, inviting_user)
 
+@app.route('/cancel_invition/', methods=['GET'])
+def cancel_invition():
+    cancelled_user = request.args.get('cancelled_user')
+    invited_user = request.args.get('invited_user')
+    return friends.cancel_ivition(cancelled_user, invited_user)
+
+
+@app.route('/delete_friend/', methods=['GET'])
+def delete_friend():
+    deleting_user = request.args.get('deleting_user')
+    deleted_user = request.args.get('deleted_user')
+    return friends.delete_friend(deleting_user, deleted_user)
+
+
+@app.route('/reject/', methods=['GET'])
+def reject():
+    rejected_user = request.args.get('rejected_user')
+    inviting_user = request.args.get('inviting_user')
+    return friends.reject_the_invition(rejected_user, inviting_user)
 
 # List of users
 
@@ -87,6 +105,8 @@ def messages(username):
 @login_required
 def send_message(username):
     return chat.send_message(username)
+
+# Upload photo
 
 @app.route('/upload/', methods=['POST', 'GET'])
 @login_required
@@ -117,28 +137,6 @@ def userava():
     h = make_response(img)
     h.headers['Content-Type'] = 'image/png'
     return h
-
-
-@app.route('/cancel_invition/', methods=['GET'])
-def cancel_invition():
-    cancelled_user = request.args.get('cancelled_user')
-    invited_user = request.args.get('invited_user')
-    return friends.cancel_ivition(cancelled_user, invited_user)
-
-
-@app.route('/delete_friend/', methods=['GET'])
-def delete_friend():
-    deleting_user = request.args.get('deleting_user')
-    deleted_user = request.args.get('deleted_user')
-    return friends.delete_friend(deleting_user, deleted_user)
-
-
-@app.route('/reject/', methods=['GET'])
-def reject():
-    rejected_user = request.args.get('rejected_user')
-    inviting_user = request.args.get('inviting_user')
-    return friends.reject_the_invition(rejected_user, inviting_user)
-
 
 @app.errorhandler(404)
 def page_not_found(e):

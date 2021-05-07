@@ -56,8 +56,8 @@
     <div class="row g-0">
         <hr>
         {% if is_owner %}
-        <h5 class="card-title">Invites</h5>
-        <ul class="list-group list-group-flush">
+        <h5 class="card-title">Friend invitations</h5>
+        <ul class="list-group">
             {% for invite in invites %}
             <li class="list-group-item">
                 <a href="{{url_for('profile_page', username=invite['user_inviting'])}}" class="nav-link">{{invite['user_inviting']}}</a>
