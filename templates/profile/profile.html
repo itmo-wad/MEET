@@ -1,31 +1,88 @@
 {% extends 'base.html' %}
 
-
 {% block title %}Profile{% endblock title %}
 
 {% block content %}
-<div class="card mb-3 w-50 mx-auto mt-5 border border-5 rounded-3" style="max-width: 540px;">
-  <div class="row g-0">
-    <div class="col-md-4 mt-2 mb-2">
-      <img src="/static/img/avatar.png" alt="...">
+<div class="card mb-3 w-50 mx-auto mt-5 border border-5 rounded-3 p-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-4 mt-2 mb-2">
+            <img src="{{url_for('userava', username=user.username)}}" alt="..." height="100px" width="100px">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                {% if is_owner %}
+                <h5 class="card-title">{{user.username}}</h5>
+                {% if user.fname != None or user.lname != None %}
+                <p class="card-text">{{user.lname}} {{user.fname}}</p>
+                {% for cat, msg in get_flashed_messages(True) %}
+                <div class="flash {{cat}}">{{msg}}</div>
+                {% endfor %}
+                {% endif %}
+                <a href="{{url_for('change_profile', username=user.username)}}" class="btn btn-primary mt-1">Change
+                    Profile</a>
+            </div>
+            {% else %}
+            <h5 class="card-title">{{user.username}}</h5>
+            {% if user.fname != None or user.lname != None %}
+            <p class="card-text">{{user.lname}} {{user.fname}}</p>
+            {% endif %}
+            {%if (user_guest.username not in user.friends) and (not isInvited) and (not isInvitedByOther) %}
+            <a href=" {{url_for('invite_to_friends', user_invited=user.username, user_inviting=user_guest.username)}} "
+               class="btn btn-primary">Add to friends</a>
+            {% else %}
+            {% if user_guest.username in user.friends %}
+            <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">You are already
+                friends</a>
+            <a href="{{url_for('delete_friend', deleting_user=user_guest.username,deleted_user=user.username)}}"
+               class="btn btn-primary mt-1 bg-danger text-white border-0" role="button"
+               aria-disabled="true">Delete from friends</a>
+            {% endif %}
+            {% if isInvited %}
+            <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">You have already invited
+                this person</a>
+            <a href="{{url_for('cancel_invition', cancelled_user=user_guest.username, invited_user=user.username)}}"
+               class="btn btn-primary mt-1 bg-danger text-white border-0" role="button"
+               aria-disabled="true">Cancel the invitation</a>
+            {% endif %}
+            {% if isInvitedByOther %}
+            <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">You have been already
+                invited by this person</a>
+            {% endif %}
+
+            {% endif %}
+            {% endif %}
+        </div>
     </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">{{user.username}}</h5>
-        {% if user.fname != None or user.lname != None  %}
-        <p class="card-text">{{user.lname}} {{user.fname}}</p>
-        {% endif %}
-        <a href="{{url_for('change_profile', username=user.username)}}" class="btn btn-primary">Change Profile</a>
-      </div>
+    <div class="row g-0">
+        <hr>
+        {% if is_owner %}
+        <h5 class="card-title">Invites</h5>
+        <ul class="list-group list-group-flush">
+            {% for invite in invites %}
+            <li class="list-group-item">
+                <a href="{{url_for('profile_page', username=invite['user_inviting'])}}" class="nav-link">{{invite['user_inviting']}}</a>
+                <div class="btn-group btn-group-sm" role="group">
+                    <a href="{{url_for('add_to_friends', inviting_user=invite['user_inviting'], accept_user=user.username)}}"
+                       class="btn btn-secondary bg-success text-white border-0">Accept invitation</a>
+                    <a href="{{url_for('reject', rejected_user=user.username, inviting_user=invite['user_inviting'])}}"
+                       class="btn btn-secondary bg-danger text-white border-0">Reject the invitation</a>
+                </div>
+            </li>
+            {% endfor %}
+            {% else %}
+            <h5 class="card-title mt-2">Friends</h5>
+            <div class="list-group">
+                {% if user.friends%}
+                {% for friend in user.friends %}
+                <a href="{{ url_for('profile_page', username=friend) }}" class="list-group-item list-group-item-action"><img
+                        src="{{url_for('userava', username=friend)}}" alt="..." width="30px" height="30px">
+                    {{friend}}</a>
+
+                {% endfor %}
+                {% endif %}
+            </div>
+            {% endif %}
+        </ul>
     </div>
-  </div>
-  <div class="row g-0">
-    <hr>
-    <h5 class="card-title">Invites</h5>
-    {% for invite in invites %}
-    <p><img src="/static/img/avatar.png" alt="..." width="40" height="40">{{invite['user_inviting']}}</p><p> <a href="{{url_for('profile_page', username=invite['user_inviting'])}}" class="btn btn-primary">Profile</a>
-    <a href="{{url_for('add_to_friends', inviting_user=invite['user_inviting'], accept_user=user.username)}}" class="btn btn-primary">Accept invite</a></p>
-    {% endfor %}
-  </div>
 </div>
 {% endblock content %}
