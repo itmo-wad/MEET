@@ -2,17 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b2de6044-7736-4896-b364-8a87e6767425" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/friends.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/friends.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/user_profile/profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/user_profile/profile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/change.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/profile/changeProfile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profile/changeProfile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/profile/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profile/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/profile/profileGuest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/users/users.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/users.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
