@@ -6,7 +6,6 @@ from flask import url_for
 
 
 def getAvatar(username, app):
-    default_ava = 'static/img/avatar.png'
     photo = username + '.png'
     avatar_directory = './static/img/userava/'
 
