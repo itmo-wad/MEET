@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import pymongo
 
 # Database connection
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongo', 27017)
 db = client.meet_db
 
 class User:
